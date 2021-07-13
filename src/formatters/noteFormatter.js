@@ -3,21 +3,29 @@
 */
 
 const xmlHelper = require("../helpers/xmlHelper");
+const htmlHelper = require("../helpers/htmlHelper");
 
-// Replaces HTML tags with their value property
-const replaceWithValue = (html, tagName) => {
-  var elements = html.getElementsByTagName(tagName);
-  while(elements.length) {
-    var text = html.createTextNode(elements[0].value);
-    elements[0].parentElement.replaceChild(text, elements[0]);
-    var elements = html.getElementsByTagName(tagName);
-  }
+// Replaces an element with its value property
+const replaceWithValue = (html, element) => {
+  if (element.hasAttribute('value'))
+    htmlHelper.replaceElement(html, element, element.value);
+  else
+    htmlHelper.removeElement(element);
+}
+
+// Replaces an elemnt with its inner HTML
+const replaceWithInnerHtml = (html, element) => {
+  if (element.innerHTML !== '')
+    htmlHelper.replaceElement(html, element, element.innerHTML);
+  else
+    htmlHelper.removeElement(element);
 }
 
 // Formats an HTML string for an emailed note
 exports.format = htmlString => {
   if (!htmlString) htmlString = "";
   var html = xmlHelper.stringToHtml(htmlString);
-  replaceWithValue(html, 'input');
+  htmlHelper.applyElements(html, 'input', replaceWithValue);
+  htmlHelper.applyElements(html, 'textarea', replaceWithInnerHtml);
   return xmlHelper.xmlToString(html);
 }

@@ -6,21 +6,29 @@ var expect = require("chai").expect;
 var formatter = require("../src/formatters/noteFormatter");
 var xmlHelper = require("../src/helpers/xmlHelper");
 
+/* Note Formatter helper methods */
+
+// Returns an HTML container from an HTML string
+const getExpectedString = expectedHtmlString =>
+  xmlHelper.xmlToString(xmlHelper.stringToHtml(expectedHtmlString));
+
+// Asserts the formatted input is equal the expected conversion
+const testInput = (input, expectedBody) =>
+  expect(
+    formatter.format(input)
+  ).to.equal(
+  getExpectedString(expectedBody));
+
+// Asserts the formatted input is equal to an empty string
+const assertReturnsEmptyString = input => 
+  testInput(input, "");
+
+/* Note Formatter Tests */
+
 // Tests for the formatter
 describe("Formats HTML to email-compatible content", () => {
-
-  // Returns an HTML container from an HTML string
-  const getExpectedString = expectedHtmlString =>
-    xmlHelper.xmlToString(xmlHelper.stringToHtml(expectedHtmlString));
-
+  // Tests empty inputs
   describe("Test Empty Inputs", () => {
-
-    const assertReturnsEmptyString = input => 
-      expect(
-        formatter.format(input)
-      ).to.equal(
-        getExpectedString(""));
-
     it("Returns Empty String for Empty String", () =>
       assertReturnsEmptyString(""))
     it("Returns Empty String for Single Space", () =>
@@ -31,40 +39,46 @@ describe("Formats HTML to email-compatible content", () => {
       assertReturnsEmptyString(undefined))
   })
 
+  // Tests Input tags
   describe("Replace Input tags with their values", () => {
-    it("Handles input tag inside div", () => {
-      var input = '<div><input type="text" value="message" /></div>';
-      var expected = getExpectedString('<div>message</div>');
-      var actual = formatter.format(input);
-      expect(actual).to.equal(expected);
-    })
+    it("Handles input tag inside div", () =>
+      testInput(
+        '<div><input type="text" value="message" /></div>', 
+        '<div>message</div>'))
 
-    it("Handles input tag by itself", () => {
-      var input = '<input type="text" value="message" />';
-      var expected = getExpectedString('message');
-      var actual = formatter.format(input);
-      expect(actual).to.equal(expected);
-    })
+    it("Handles input tag by itself", () =>
+      testInput(
+        '<input type="text" value="message" />',
+        'message'))
 
-    it ("Handles many input tags inside div", () => {
-      var input = '<div>';
-      input += '<input type="text" value="message1" />';
-      input += '<input type="text" value="message2" />';
-      input += '<input type="text" value="message3" />';
-      input += '</div>';
-      var expected = getExpectedString('<div>message1message2message3</div>');
-      var actual = formatter.format(input);
-      expect(actual).to.equal(expected);
-    })
+    it("Handles input tag without a value", () =>
+      testInput(
+        '<input type="text" />',
+        ''))
 
-    it ("Handles many input tags by themselves", () => {
-      var input = '<input type="text" value="message1" />'
-      input += '<input type="text" value="message2" />'
-      input += '<input type="text" value="message3" />'
-      var expected = getExpectedString('message1message2message3');
-      var actual = formatter.format(input);
-      expect(actual).to.equal(expected);
-    })
+    it("Handles many input tags inside div", () =>
+      testInput(
+        '<div>' + 
+          '<input type="text" value="message1" />' +
+          '<input type="text" value="message2" />' +
+          '<input type="text" value="message3" />' +
+        '</div>',
+        '<div>message1message2message3</div>'))
+
+    it("Handles many input tags by themselves", () =>
+      testInput(
+        '<input type="text" value="message1" />' +
+        '<input type="text" value="message2" />' +
+        '<input type="text" value="message3" />',
+        'message1message2message3'))
   })
 
+  // Tests textarea tags
+  describe("Replace TextArea tags with their innerHTML", () => {
+    it("Handles Empty Elements", () =>
+      testInput('<textarea></textarea>', ''))
+
+    it("Handles elements with text only", () =>
+      testInput('<textarea>Message</textarea>', 'Message'))
+  })
 })
