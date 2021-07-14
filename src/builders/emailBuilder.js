@@ -1,5 +1,6 @@
 var htmlHelper = require('../helpers/htmlHelper');
 var noteFormatter = require('../formatters/noteFormatter');
+var metaFormatter = require('../formatters/metaFormatter');
 
 // Creates a div with a class and inner HTML
 const createContainer = (doc, className, innerHTML) => {
@@ -25,11 +26,18 @@ const appendTitle = (doc, request) => {
       createContainer(doc, 'title', request.title))
 }
 
+const appendMeta = (doc, request) => {
+  var content = metaFormatter.format(request.author, request.date);
+  if (content)
+    doc.body.append(createContainer(doc, 'meta', content));
+}
+
 // Accepts a note request and builds an HTML document that can be sent in an email
 exports.build = noteRequest => {
   var doc = htmlHelper.newDocument();
   if (!noteRequest) return doc;
   appendContent(doc, noteRequest);
   appendTitle(doc, noteRequest);
+  appendMeta(doc, noteRequest);
   return doc;
 }
