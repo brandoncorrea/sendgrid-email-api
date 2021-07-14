@@ -36,8 +36,8 @@ const appendMeta = (doc, request) => {
 exports.build = noteRequest => {
   var doc = htmlHelper.newDocument();
   if (!noteRequest) return doc;
-  appendContent(doc, noteRequest);
   appendTitle(doc, noteRequest);
   appendMeta(doc, noteRequest);
+  appendContent(doc, noteRequest);
   return doc;
 }
