@@ -17,7 +17,7 @@ describe("Tests when Meta Content Formatter Receives only Author", () => {
       assertCreatesAuthorString("First Last", undefined))
   })
 
-  describe("Test author name Capitalization", () => {
+  describe("Test author name Formatting", () => {
     const assertAuthorEquals = (author, expected) =>
       expect(
         metaFormatter.format(author, null)
@@ -35,5 +35,7 @@ describe("Tests when Meta Content Formatter Receives only Author", () => {
       assertAuthorEquals('This Is Capitalized', 'This Is Capitalized'))
     it("Retains capitalization in the middle of a name", () =>
       assertAuthorEquals('mcFarley mcGregor macBeth', 'McFarley McGregor MacBeth'))
+    it("Excludes extra spacing", () =>
+      assertAuthorEquals('  Brandon   Armon   Correa  ', 'Brandon Armon Correa'))
   })
 })
