@@ -4,7 +4,7 @@ var NoteRequest = require('../src/models/NoteRequest');
 var emailBuilder = require('../src/builders/emailBuilder');
 var noteFormatter = require('../src/formatters/noteFormatter');
 
-describe("Formats Note Request to email compatible HTML document", () => {
+describe("Builder adds Content Nodes to email compatible HTML document", () => {
   // Returns all elements with the content class
   const getContentElements = request =>
     emailBuilder
