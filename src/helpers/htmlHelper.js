@@ -1,5 +1,8 @@
 const jsdom = require("jsdom");
 
+exports.newDocument = () =>
+  (new jsdom.JSDOM()).window.document;
+
 // Converts a string to an HTML document
 exports.parseHtml = xmlString =>
   (new jsdom.JSDOM(xmlString)).window.document;
