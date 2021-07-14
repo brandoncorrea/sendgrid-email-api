@@ -1,26 +1,35 @@
 var htmlHelper = require('../helpers/htmlHelper');
 var noteFormatter = require('../formatters/noteFormatter');
 
-const appendContent = (doc, parsedContent) => {
-  var content = doc.createElement('div');
-  content.setAttribute('class', 'content');
-  content.innerHTML = parsedContent;
+// Creates a div with a class and inner HTML
+const createContainer = (doc, className, innerHTML) => {
+  var el = doc.createElement('div');
+  el.setAttribute('class', className);
+  el.innerHTML = innerHTML;
+  return el;
+}
+
+// Adds the content element to the document
+const appendContent = (doc, request) => {
+  var parsedContent = noteFormatter.format(request.content);
+  if (!parsedContent) return;
+  var content = createContainer(doc, 'content', parsedContent);
   if (content.textContent.trim())
     doc.body.append(content);
 }
 
-const appendTitle = (doc, titleText) => {
-  var title = doc.createElement('div');
-  title.setAttribute('class', 'title');
-  title.innerHTML = titleText;
-  doc.body.append(title);
+// Adds the title element to the document
+const appendTitle = (doc, request) => {
+  if (request.title && request.title.trim())
+    doc.body.append(
+      createContainer(doc, 'title', request.title))
 }
 
+// Accepts a note request and builds an HTML document that can be sent in an email
 exports.build = noteRequest => {
   var doc = htmlHelper.newDocument();
   if (!noteRequest) return doc;
-  var parsedContent = noteFormatter.format(noteRequest.content);
-  if (parsedContent) appendContent(doc, parsedContent);
-  if (noteRequest.title && noteRequest.title.trim()) appendTitle(doc, noteRequest.title);
+  appendContent(doc, noteRequest);
+  appendTitle(doc, noteRequest);
   return doc;
 }
