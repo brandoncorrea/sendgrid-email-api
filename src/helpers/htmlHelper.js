@@ -1,3 +1,5 @@
+const jsdom = require("jsdom");
+
 // Replaces an element with text content
 exports.replaceElement = (html, element, content) => 
   element.parentElement.replaceChild(
@@ -16,3 +18,7 @@ exports.applyElements = (html, tagName, apply) => {
     var elements = html.getElementsByTagName(tagName);
   }
 }
+
+// Converts a string to an HTML document
+exports.parseHtml = xmlString =>
+  (new jsdom.JSDOM(xmlString)).window.document;

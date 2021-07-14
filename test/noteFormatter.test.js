@@ -4,20 +4,13 @@
 
 var expect = require("chai").expect;
 var formatter = require("../src/formatters/noteFormatter");
-var xmlHelper = require("../src/helpers/xmlHelper");
 
 /* Note Formatter helper methods */
 
-// Returns an HTML container from an HTML string
-const getExpectedString = expectedHtmlString =>
-  xmlHelper.xmlToString(xmlHelper.stringToHtml(expectedHtmlString));
-
 // Asserts the formatted input is equal the expected conversion
-const testInput = (input, expectedBody) =>
-  expect(
-    formatter.format(input)
-  ).to.equal(
-  getExpectedString(expectedBody));
+const testInput = (input, expectedOutput) =>
+  expect(formatter.format(input))
+  .to.equal(expectedOutput);
 
 // Asserts the formatted input is equal to an empty string
 const assertReturnsEmptyString = input => 

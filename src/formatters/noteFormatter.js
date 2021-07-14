@@ -2,7 +2,6 @@
   Formatter for Sermon Notes
 */
 
-const xmlHelper = require("../helpers/xmlHelper");
 const htmlHelper = require("../helpers/htmlHelper");
 
 // Replaces an element with its value property
@@ -24,8 +23,8 @@ const replaceWithInnerHtml = (html, element) => {
 // Formats an HTML string for an emailed note
 exports.format = htmlString => {
   if (!htmlString) htmlString = "";
-  var html = xmlHelper.stringToHtml(htmlString);
+  var html = htmlHelper.parseHtml(htmlString);
   htmlHelper.applyElements(html, 'input', replaceWithValue);
   htmlHelper.applyElements(html, 'textarea', replaceWithInnerHtml);
-  return xmlHelper.xmlToString(html);
+  return html.body.innerHTML;
 }
