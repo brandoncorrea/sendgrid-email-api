@@ -92,10 +92,27 @@ describe("Formats HTML to email-compatible content", () => {
       testInput('<div><button onclick="clickEvent()">Test Button</button><p>Test Text</p></div>', '<div><p>Test Text</p></div>'))
   })
 
+  // Tests Input Tags with type Button
   describe("Remove inputs with Button types", () => {
     it("Removes single button inputs", () => 
       testInput('<input type="button" />', ''))
     it("Does not replace button input with value", () => 
       testInput('<input type="button" value="Button Value" />', ''))
+  })
+
+  // Tests Select Tags
+  describe("Replaces select tags with their values", () => {
+    it("Replaces select tag with its selected value", () =>
+      testInput('<select>' +
+          '<option value="1">Option 1</option>' +
+          '<option value="2" selected="selected">Option 2</option>' +
+          '<option value="3">Option 3</option>' +
+        '</select>', 'Option 2'))
+    it("Replaces tag with first option when nothing is selected", () =>
+      testInput('<select>' +
+          '<option value="1">Option 1</option>' +
+          '<option value="2">Option 2</option>' +
+          '<option value="3">Option 3</option>' +
+        '</select>', 'Option 1'))
   })
 })

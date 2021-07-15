@@ -22,5 +22,6 @@ exports.format = htmlString => {
   removeButtons(html);
   htmlHelper.replaceElements(html, 'input', el => el.value);
   htmlHelper.replaceElements(html, 'textarea', el => el.innerHTML);
+  htmlHelper.replaceElements(html, 'select', el => el.options[el.selectedIndex].text);
   return html.body.innerHTML;
 }
