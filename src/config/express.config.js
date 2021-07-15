@@ -1,12 +1,13 @@
 const express = require("express"),
   testRoutes = require('../routes/test.routes'),
-  path = require("path");
+  notesRoutes = require('../routes/notes.routes');
 
 module.exports.init = () => {
   // initialize app
   const app = express();
 
   app.use('/test', testRoutes);
+  app.use('/email/notes', notesRoutes)
 
   // catch 404 and forward to error handler
   app.use((req, res, next) => {
