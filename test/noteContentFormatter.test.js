@@ -78,7 +78,7 @@ describe("Formats HTML to email-compatible content", () => {
 
   // Tests Button Tags
   describe("Remove all button tags", () => {
-    it("Removes all button tags", () =>
+    it("Removes single button tag", () =>
       testInput('<button></button>', ''))
     it("Removes buttons with inner HTML", () =>
       testInput('<button>Test Button</button>', ''))
@@ -90,5 +90,12 @@ describe("Formats HTML to email-compatible content", () => {
       testInput('<button onclick="clickEvent()">Test Button</button><p>Test Text</p>', '<p>Test Text</p>'))
     it("Removes buttons with sibling elements inside a div", () =>
       testInput('<div><button onclick="clickEvent()">Test Button</button><p>Test Text</p></div>', '<div><p>Test Text</p></div>'))
+  })
+
+  describe("Remove inputs with Button types", () => {
+    it("Removes single button inputs", () => 
+      testInput('<input type="button" />', ''))
+    it("Does not replace button input with value", () => 
+      testInput('<input type="button" value="Button Value" />', ''))
   })
 })
