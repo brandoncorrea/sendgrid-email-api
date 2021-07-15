@@ -4,7 +4,7 @@ var sendgrid = require('../services/sendgrid.service');
 module.exports.send = (req, res) => {
   sendgrid.sendMail(
     'bwancor@gmail.com',
-    'test@noreply.com',
+    'test@example.com',
     'Test Email',
     '<div>Content</div>'
   )
