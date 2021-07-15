@@ -1,5 +1,5 @@
 var expect = require('chai').expect;
-var metaFormatter = require('../src/formatters/metaFormatter');
+var metaFormatter = require('../src/formatters/sermonNoteMetaFormatter');
 
 describe("Tests for formatting Author and Date together", () => {
   const assertFormatEquals = (author, date, expected) =>

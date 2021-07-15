@@ -1,5 +1,5 @@
 var expect = require('chai').expect;
-var metaFormatter = require('../src/formatters/metaFormatter');
+var metaFormatter = require('../src/formatters/sermonNoteMetaFormatter');
 
 describe("Tests when Note Meta Content Formatter returns empty", () => {
   describe("Test when Author and Date are empty", () => {

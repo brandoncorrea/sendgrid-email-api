@@ -1,8 +1,8 @@
 
 var expect = require("chai").expect;
 var NoteRequest = require('../src/models/NoteRequest');
-var emailBuilder = require('../src/builders/emailBuilder');
-var noteFormatter = require('../src/formatters/noteFormatter');
+var emailBuilder = require('../src/builders/sermonNoteBuilder');
+var noteFormatter = require('../src/formatters/sermonNoteContentFormatter');
 
 describe("Builder adds Content Nodes to email compatible HTML document", () => {
   // Returns all elements with the content class

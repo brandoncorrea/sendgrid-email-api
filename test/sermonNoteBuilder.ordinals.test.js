@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-var builder = require('../src/builders/emailBuilder');
+var builder = require('../src/builders/sermonNoteBuilder');
 
 describe("Tests the order in which elements are added", () => {
   describe("Elements added in order: Title, Meta, Content", () => {
