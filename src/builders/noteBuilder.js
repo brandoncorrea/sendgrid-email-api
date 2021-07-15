@@ -1,6 +1,6 @@
 var htmlHelper = require('../helpers/htmlHelper');
-var noteFormatter = require('../formatters/sermonNoteContentFormatter');
-var metaFormatter = require('../formatters/sermonNoteMetaFormatter');
+var noteFormatter = require('../formatters/noteContentFormatter');
+var metaFormatter = require('../formatters/noteMetaFormatter');
 
 // Creates a div with a class and inner HTML
 const createContainer = (doc, className, innerHTML) => {
