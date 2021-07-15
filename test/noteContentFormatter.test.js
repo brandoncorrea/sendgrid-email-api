@@ -3,7 +3,7 @@
 */
 
 var expect = require("chai").expect;
-var formatter = require("../src/formatters/sermonNoteContentFormatter");
+var formatter = require("../src/formatters/noteContentFormatter");
 
 /* Note Formatter helper methods */
 

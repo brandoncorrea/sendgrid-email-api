@@ -1,5 +1,5 @@
 var expect = require('chai').expect;
-var metaFormatter = require('../src/formatters/sermonNoteMetaFormatter');
+var metaFormatter = require('../src/formatters/noteMetaFormatter');
 
 const months = [
   "January",

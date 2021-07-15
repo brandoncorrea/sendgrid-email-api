@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
 var NoteRequest = require('../src/models/NoteRequest');
-var builder = require('../src/builders/sermonNoteBuilder');
+var builder = require('../src/builders/noteBuilder');
 
 describe("Builder adds Title Nodes to email compatible HTML document", () => {
   const getTitleElements = request =>

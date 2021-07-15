@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
 var NoteRequest = require('../src/models/NoteRequest');
-var emailBuilder = require('../src/builders/sermonNoteBuilder');
+var emailBuilder = require('../src/builders/noteBuilder');
 
 describe("Builder adds Meta Nodes to email compatible HTML document", () => {
   const getMetaElements = request => 
