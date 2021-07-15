@@ -1,4 +1,4 @@
-var express = require('express');
+const express = require('./config/express.config');
 
 var port = process.env.PORT || 8080;
 
