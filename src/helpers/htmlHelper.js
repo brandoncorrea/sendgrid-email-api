@@ -8,8 +8,9 @@ exports.parseHtml = xmlString =>
   (new jsdom.JSDOM(xmlString)).window.document;
 
 // Removes an element from its parent
-exports.removeElement = element => 
-  element.parentElement.removeChild(element);
+exports.removeElement = element =>
+  element.outerHTML = '';
+  //element.parentElement.removeChild(element);
 
 // Replaces an element with text content
 exports.replaceElement = (html, element, content) =>

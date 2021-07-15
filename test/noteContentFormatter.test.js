@@ -12,16 +12,17 @@ const testInput = (input, expectedOutput) =>
   expect(formatter.format(input))
   .to.equal(expectedOutput);
 
-// Asserts the formatted input is equal to an empty string
-const assertReturnsEmptyString = input => 
-  testInput(input, "");
-
 /* Note Formatter Tests */
 
 // Tests for the formatter
 describe("Formats HTML to email-compatible content", () => {
+
   // Tests empty inputs
   describe("Test Empty Inputs", () => {
+    // Asserts the formatted input is equal to an empty string
+    const assertReturnsEmptyString = input => 
+      testInput(input, "");
+
     it("Returns Empty String for Empty String", () =>
       assertReturnsEmptyString(""))
     it("Returns Empty String for Single Space", () =>
@@ -73,5 +74,21 @@ describe("Formats HTML to email-compatible content", () => {
 
     it("Handles elements with text only", () =>
       testInput('<textarea>Message</textarea>', 'Message'))
+  })
+
+  // Tests Button Tags
+  describe("Remove all button tags", () => {
+    it("Removes all button tags", () =>
+      testInput('<button></button>', ''))
+    it("Removes buttons with inner HTML", () =>
+      testInput('<button>Test Button</button>', ''))
+    it("Removes buttons with onclick attributes", () =>
+      testInput('<button onclick="clickEvent()">Test Button</button>', ''))
+    it("Removes buttons within a div", () =>
+      testInput('<div><button onclick="clickEvent()">Test Button</button></div>', '<div></div>'))
+    it("Removes buttons with sibling elements", () =>
+      testInput('<button onclick="clickEvent()">Test Button</button><p>Test Text</p>', '<p>Test Text</p>'))
+    it("Removes buttons with sibling elements inside a div", () =>
+      testInput('<div><button onclick="clickEvent()">Test Button</button><p>Test Text</p></div>', '<div><p>Test Text</p></div>'))
   })
 })
