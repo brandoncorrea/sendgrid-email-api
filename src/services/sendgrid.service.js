@@ -2,5 +2,10 @@ const sendgrid = require('@sendgrid/mail');
 const settings = require('../appSettings.json');
 sendgrid.setApiKey(settings.SendGrid.ApiKey);
 
-exports.sendMail = (to, from, subject, html) => sendgrid
-  .send({ to, from, subject, html });
+exports.sendMail = (to, subject, html) => sendgrid
+  .send({ 
+    to: to, 
+    from: settings.SendGrid.From, 
+    subject: subject, 
+    html: html
+  });
