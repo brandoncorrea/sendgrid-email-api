@@ -1,13 +1,16 @@
 const express = require("express"),
   testRoutes = require('../routes/test.routes'),
-  notesRoutes = require('../routes/notes.routes');
+  notesRoutes = require('../routes/notes.routes'),
+  cors = require("cors");
 
 module.exports.init = () => {
   // initialize app
-  const app = express();
+  const app = express()
+
+  app.use(cors())
   app.use(express.json())
 
-  app.use('/test', testRoutes);
+  app.use('/test', testRoutes)
   app.use('/email/notes', notesRoutes)
 
 
