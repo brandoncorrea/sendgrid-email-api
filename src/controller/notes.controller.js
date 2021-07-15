@@ -1,4 +1,4 @@
-const noteBuilder = require('../builders/sermonNoteBuilder');
+const noteBuilder = require('../builders/noteBuilder');
 const sendgrid = require('../services/sendgrid.service');
 var validator = require("email-validator");
 const NoteRequest = require('../models/NoteRequest');
@@ -25,10 +25,10 @@ const parseNote = req => {
   note.recipient = req.body.recipient;
   note.author = req.body.author;
   note.content = req.body.content;
+  note.title = req.body.title;
   var timestamp = Date.parse(req.body.date);
   if (!isNaN(timestamp))  
     note.date = new Date(timestamp);
-  note.title = req.body.title;
   return note;
 }
  
