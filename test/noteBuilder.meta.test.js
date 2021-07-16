@@ -34,7 +34,7 @@ describe("Builder adds Meta Nodes to email compatible HTML document", () => {
     const assertMetaCreated = (request, expectedContent) => {
       var metas = getMetaElements(request);
       expect(metas.length).to.equal(1);
-      expect(metas[0].innerHTML).to.equal(expectedContent);
+      expect(metas[0].innerHTML).to.equal(expectedContent.toUpperCase());
     }
 
     it("Contains Author Only", () =>

@@ -1,3 +1,4 @@
+const fs = require('fs');
 var htmlHelper = require('../helpers/htmlHelper');
 var noteFormatter = require('../formatters/noteContentFormatter');
 var metaFormatter = require('../formatters/noteMetaFormatter');
@@ -23,13 +24,19 @@ const appendContent = (doc, request) => {
 const appendTitle = (doc, request) => {
   if (request.title && request.title.trim())
     doc.body.append(
-      createContainer(doc, 'title', request.title))
+      createContainer(doc, 'title', request.title.toUpperCase()))
 }
 
 const appendMeta = (doc, request) => {
   var content = metaFormatter.format(request.author, request.date);
   if (content)
-    doc.body.append(createContainer(doc, 'meta', content));
+    doc.body.append(createContainer(doc, 'meta', content.toUpperCase()));
+}
+
+const addStyles = (doc, path) =>  {
+  var style = doc.createElement('style');
+  style.innerHTML = fs.readFileSync(path, 'utf8');
+  doc.head.append(style);
 }
 
 // Accepts a note request and builds an HTML document that can be sent in an email
@@ -39,5 +46,6 @@ exports.build = noteRequest => {
   appendTitle(doc, noteRequest);
   appendMeta(doc, noteRequest);
   appendContent(doc, noteRequest);
+  addStyles(doc, __dirname + '/../styles/notes.css');
   return doc;
 }

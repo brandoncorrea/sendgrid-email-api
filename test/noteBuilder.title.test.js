@@ -30,7 +30,7 @@ describe("Builder adds Title Nodes to email compatible HTML document", () => {
     const assertTitleContainsText = request => {
       var titles = getTitleElements(request);
       expect(titles.length).to.equal(1);
-      expect(titles[0].innerHTML).to.equal(request.title);
+      expect(titles[0].innerHTML).to.equal(request.title.toUpperCase());
     }
 
     it("Creates title with text", () =>
