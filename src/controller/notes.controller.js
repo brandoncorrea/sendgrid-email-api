@@ -1,12 +1,13 @@
 const noteBuilder = require('../builders/noteBuilder');
 const sendgrid = require('../services/sendgrid.service');
-var validator = require("email-validator");
+const validator = require("email-validator");
+const subjectFormatter = require('../formatters/subjectFormatter');
 const NoteRequest = require('../models/NoteRequest');
 
 const sendEmailNote = (note, res) =>
   sendgrid.sendMail(
     note.recipient,
-    note.title,
+    subjectFormatter.format(note.title),
     noteBuilder.build(note).documentElement.innerHTML
   )
   .then(response => {
