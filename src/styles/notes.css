@@ -24,3 +24,17 @@
   font-size: 13px;
   width: 70%;
 }
+
+@media screen and (max-width: 600px) {
+  .title {
+    font-size: 28px;
+  }
+
+  .meta {
+    font-size: 14px;
+  }
+
+  .content {
+    width: 90%;
+  }
+}
