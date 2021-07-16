@@ -1,12 +1,13 @@
-body {
-  background-color: #fff;
+.title,
+.meta,
+.content {
   font-family: 'Verdana', 'Geneva', 'Tahoma', sans-serif;
-  white-space: pre-line;
+  white-space: pre;
 }
 
 .title {
   color: rgba(41, 171, 226, 1);
-  font-size: 38px; /* 264.705882% of .meta */
+  font-size: 38px;
   font-weight: bold;
   text-align: center;
 }
@@ -15,7 +16,7 @@ body {
   text-align: center;
   font-style: italic;
   padding: 22px 0;
-  font-size: 16px; /* 121.428571% of .content */
+  font-size: 16px;
 }
 
 .content {
