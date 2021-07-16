@@ -1,6 +1,6 @@
 const sendgrid = require('@sendgrid/mail');
 const settings = require('../appSettings.json');
-sendgrid.setApiKey(settings.SendGrid.ApiKey);
+sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
 exports.sendMail = (to, subject, html) => sendgrid
   .send({ 
