@@ -137,8 +137,19 @@ describe("Formats HTML to email-compatible content", () => {
 
     it('Removes multiple spaces', () => {
       var content = '      <p>Here is some text. suh.</p>        <p>This is a new line and this is yah.</p>        <p>This line has no blanks.</p>        <p>  Option 1  </p>        <p></p>   ';
-      var expected = '<p>Here is some text. suh.</p> <p>This is a new line and this is yah.</p> <p>This line has no blanks.</p> <p> Option 1 </p> <p></p>'
+      var expected = '<p>Here is some text. suh.</p><p>This is a new line and this is yah.</p><p>This line has no blanks.</p><p> Option 1 </p><p></p>'
       expect(formatter.format(content)).to.equal(expected)
+    })
+
+    it('Preserves existing spacing', () => {
+      var content = '<p>Here is some text. suh.</p><p>This is a new line and this is yah.</p><p>This line has no blanks.</p><p> Option 1 </p><p></p>';
+      expect(formatter.format(content)).to.equal(content);
+    })
+
+    it ('Collapses space between nodes', () => {
+      var content = '<p>Node 1</p> <p>Node 2</p>'
+      var expected = '<p>Node 1</p><p>Node 2</p>'
+      expect(formatter.format(content)).to.equal(expected);
     })
     
   })
