@@ -158,7 +158,7 @@ describe("Formats HTML to email-compatible content", () => {
       expect(formatter.format(content)).to.equal(expected);
     })
 
-    it('S', () => {
+    it('The ultimate test: Parse wordpress page content', () => {
       var content = '\r\n\r\n\r\n<p>Here is some text. <input type="text" class="fill-in-the-blanks-input" value="">.</p>';
       content += '\r\n\r\n\r\n\r\n<p>This is a new line and this is <input type="text" class="fill-in-the-blanks-input" value="">.</p>';
       content += '\r\n\r\n\r\n\r\n<p>This line has no blanks.</p>';
