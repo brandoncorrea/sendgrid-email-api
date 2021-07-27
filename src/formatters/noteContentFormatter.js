@@ -19,6 +19,8 @@ const filterWhitespace = html => {
   var content = html.body.innerHTML.trim();
   while(content.includes('\n'))
     content = content.replace('\n', '');
+  while(content.includes('  '))
+    content = content.replace('  ', ' ');
   html.body.innerHTML = content;
 }
 
