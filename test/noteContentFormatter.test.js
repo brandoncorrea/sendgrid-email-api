@@ -158,5 +158,24 @@ describe("Formats HTML to email-compatible content", () => {
       expect(formatter.format(content)).to.equal(expected);
     })
 
+    it('S', () => {
+      var content = '\r\n\r\n\r\n<p>Here is some text. <input type="text" class="fill-in-the-blanks-input" value="">.</p>';
+      content += '\r\n\r\n\r\n\r\n<p>This is a new line and this is <input type="text" class="fill-in-the-blanks-input" value="">.</p>';
+      content += '\r\n\r\n\r\n\r\n<p>This line has no blanks.</p>';
+      content += '\r\n\r\n\r\n\r\n<p>\r\n\t<select>'
+      content += '\r\n\t\t<option value="1" selected="selected">Option 1</option>'
+      content += '\r\n\t\t<option value="2">Option 2</option>';
+      content += '\r\n\t\t<option value="3">Option 3</option>';
+      content += '\r\n\t</select>\r\n</p>';
+      content += '\r\n\r\n\r\n\r\n<p><textarea></textarea></p>'
+      content += "<button id=\"export-pdf-btn\" onclick=\"emailNotesToCurrentUser('bwancor@gmail.com')\">Email Notes</button>\r\n\r\n";
+      var expected = "<p>Here is some text. .</p>";
+      expected += "<p>This is a new line and this is .</p>";
+      expected += "<p>This line has no blanks.</p>";
+      expected += "<p>Option 1</p>";
+      expected += "<p></p>"
+      expect(formatter.format(content)).to.equal(expected);
+    })
+
   })
 })

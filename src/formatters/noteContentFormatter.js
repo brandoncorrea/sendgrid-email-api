@@ -15,27 +15,30 @@ const removeButtons = html => {
     buttons[i].outerHTML = '';
 }
 
+const filterContent = (content, find, replace) => {
+  while(content.includes(find))
+    content = content.replace(find, replace);
+  return content;
+}
+
 const filterWhitespace = html => {
-  var content = html.body.innerHTML.trim();
-  while(content.includes('\n'))
-    content = content.replace('\n', '');
-  while(content.includes('  '))
-    content = content.replace('  ', ' ');
-  while(content.includes('> '))
-    content = content.replace('> ', '>');
-  while(content.includes(' <'))
-    content = content.replace(' <', '<');
-  html.body.innerHTML = content;
+  var content = html.body.innerHTML;
+  content = filterContent(content, '\n', '');
+  content = filterContent(content, '  ', ' ');
+  content = filterContent(content, '\t', '');
+  content = filterContent(content, '> ', '>');
+  content = filterContent(content, ' <', '<');
+  html.body.innerHTML = content.trim();
 }
 
 // Formats an HTML string for an emailed note
 exports.format = htmlString => {
   if (!htmlString) htmlString = "";
   var html = htmlHelper.parseHtml(htmlString);
-  htmlString = filterWhitespace(html);
   removeButtons(html);
   htmlHelper.replaceElements(html, 'input', el => el.value);
   htmlHelper.replaceElements(html, 'textarea', el => el.innerHTML);
   htmlHelper.replaceElements(html, 'select', el => el.options[el.selectedIndex].text);
+  htmlString = filterWhitespace(html);
   return html.body.innerHTML;
 }
