@@ -21,8 +21,10 @@ const filterWhitespace = html => {
     content = content.replace('\n', '');
   while(content.includes('  '))
     content = content.replace('  ', ' ');
-  while(content.includes('> <'))
-    content = content.replace('> <', '><');
+  while(content.includes('> '))
+    content = content.replace('> ', '>');
+  while(content.includes(' <'))
+    content = content.replace(' <', '<');
   html.body.innerHTML = content;
 }
 
