@@ -1,4 +1,3 @@
-
 var expect = require("chai").expect;
 var NoteRequest = require('../src/models/NoteRequest');
 var emailBuilder = require('../src/builders/noteBuilder');

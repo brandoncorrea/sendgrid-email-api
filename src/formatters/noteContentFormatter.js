@@ -15,10 +15,18 @@ const removeButtons = html => {
     buttons[i].outerHTML = '';
 }
 
+const filterWhitespace = html => {
+  var content = html.body.innerHTML.trim();
+  while(content.includes('\n\n'))
+    content = content.replace('\n\n', '\n');
+  html.body.innerHTML = content;
+}
+
 // Formats an HTML string for an emailed note
 exports.format = htmlString => {
   if (!htmlString) htmlString = "";
   var html = htmlHelper.parseHtml(htmlString);
+  htmlString = filterWhitespace(html);
   removeButtons(html);
   htmlHelper.replaceElements(html, 'input', el => el.value);
   htmlHelper.replaceElements(html, 'textarea', el => el.innerHTML);
