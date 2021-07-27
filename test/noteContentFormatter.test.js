@@ -119,19 +119,19 @@ describe("Formats HTML to email-compatible content", () => {
   describe('Filters out extra whitespace', () => {
     it('Removes return and newline pairs', () => {
       var content = '\r\n\r\n<div>\r\n\r\n\r\nHi\r\n\r\n</div>\r\n\r\n';
-      var expected = '<div>\nHi\n</div>'
+      var expected = '<div>Hi</div>'
       expect(formatter.format(content)).to.equal(expected);
     })
 
     it('Removes carriage return pairs', () => {
       var content = '\r\r<div>\r\r\rHi\r\r</div>\r\r';
-      var expected = '<div>\nHi\n</div>'
+      var expected = '<div>Hi</div>'
       expect(formatter.format(content)).to.equal(expected);
     })
 
     it('Removes newline pairs', () => {
       var content = '\n\n<div>\n\n\nHi\n\n</div>\n\n';
-      var expected = '<div>\nHi\n</div>'
+      var expected = '<div>Hi</div>'
       expect(formatter.format(content)).to.equal(expected);
     })
 

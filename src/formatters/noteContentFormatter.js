@@ -17,8 +17,8 @@ const removeButtons = html => {
 
 const filterWhitespace = html => {
   var content = html.body.innerHTML.trim();
-  while(content.includes('\n\n'))
-    content = content.replace('\n\n', '\n');
+  while(content.includes('\n'))
+    content = content.replace('\n', '');
   html.body.innerHTML = content;
 }
 
