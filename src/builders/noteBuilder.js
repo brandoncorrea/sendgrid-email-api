@@ -1,7 +1,7 @@
 const fs = require('fs');
 var htmlHelper = require('../helpers/htmlHelper');
 var noteFormatter = require('../formatters/noteContentFormatter');
-var metaFormatter = require('../formatters/noteMetaFormatter');
+const { disconnect } = require('process');
 
 // Creates a div with a class and inner HTML
 const createContainer = (doc, className, innerHTML) => {
@@ -12,25 +12,12 @@ const createContainer = (doc, className, innerHTML) => {
 }
 
 // Adds the content element to the document
-const appendContent = (doc, request) => {
-  var parsedContent = noteFormatter.format(request.content);
+const appendContent = (doc, content) => {
+  var parsedContent = noteFormatter.format(content);
   if (!parsedContent) return;
-  var content = createContainer(doc, 'content', parsedContent);
-  if (content.textContent.trim())
-    doc.body.append(content);
-}
-
-// Adds the title element to the document
-const appendTitle = (doc, request) => {
-  if (request.title && request.title.trim())
-    doc.body.append(
-      createContainer(doc, 'title', request.title.toUpperCase()))
-}
-
-const appendMeta = (doc, request) => {
-  var content = metaFormatter.format(request.author, request.date);
-  if (content)
-    doc.body.append(createContainer(doc, 'meta', content.toUpperCase()));
+  var contentNode = createContainer(doc, 'content', parsedContent);
+  if (contentNode.textContent.trim())
+    doc.body.append(contentNode);
 }
 
 const addStyles = (doc, path) =>  {
@@ -40,12 +27,10 @@ const addStyles = (doc, path) =>  {
 }
 
 // Accepts a note request and builds an HTML document that can be sent in an email
-exports.build = noteRequest => {
+exports.build = content => {
   var doc = htmlHelper.newDocument();
-  if (!noteRequest) return doc;
-  appendTitle(doc, noteRequest);
-  appendMeta(doc, noteRequest);
-  appendContent(doc, noteRequest);
+  if (!content) return doc;
+  appendContent(doc, content);
   addStyles(doc, __dirname + '/../styles/notes.css');
   return doc;
 }

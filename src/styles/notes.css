@@ -1,18 +1,16 @@
-.title,
-.meta,
-.content {
+h1, h4, .content {
   font-family: 'Verdana', 'Geneva', 'Tahoma', sans-serif;
   white-space: pre;
 }
 
-.title {
+h1 {
   color: rgba(41, 171, 226, 1);
   font-size: 38px;
   font-weight: bold;
   text-align: center;
 }
 
-.meta {
+h4 {
   text-align: center;
   font-style: italic;
   padding: 22px 0;

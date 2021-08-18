@@ -1,5 +1,4 @@
 var expect = require("chai").expect;
-var NoteRequest = require('../src/models/NoteRequest');
 var emailBuilder = require('../src/builders/noteBuilder');
 var noteFormatter = require('../src/formatters/noteContentFormatter');
 
@@ -16,49 +15,47 @@ describe("Builder adds Content Nodes to email compatible HTML document", () => {
     const assertContentNotExists = request => 
       expect(getContentElements(request).length).to.equal(0);
 
-    it("Does not add content with new NoteRequest", () => 
-      assertContentNotExists(new NoteRequest()))
     it("Does not add content if content is empty", () => 
-      assertContentNotExists({ content: '' }))
+      assertContentNotExists(''))
     it("Does not add content if content is single space", () => 
-      assertContentNotExists({ content: ' ' }))
+      assertContentNotExists(' '))
     it("Does not add content if content is undefined", () => 
-      assertContentNotExists({ content: undefined }))
+      assertContentNotExists(undefined))
     it("Does not add content if content is null", () => 
-      assertContentNotExists({ content: null }))
+      assertContentNotExists(null))
     it("Does not add content if content is empty textarea", () => 
-      assertContentNotExists({ content: '<textarea></textarea>' }))
+      assertContentNotExists('<textarea></textarea>'))
     it("Does not add content if textarea and div are empty", () => 
-      assertContentNotExists({ content: '<div><textarea></textarea></div>' }))
+      assertContentNotExists('<div><textarea></textarea></div>'))
     it("Does not add content for input with single space", () => 
-      assertContentNotExists({ content: '<input type="text" value=" " />' }))
+      assertContentNotExists('<input type="text" value=" " />'))
     it("Does not add content div and input with single space", () => 
-      assertContentNotExists({ content: '<div><input type="text" value=" " /></div>' }))
+      assertContentNotExists('<div><input type="text" value=" " /></div>'))
   })
 
   describe("Content Element Created with Parsed HTML", () => {
-    // Expects the request to generate 1 content element with properly formatted HTML
-    const assertParsedContentNode = request => {
-      var elements = getContentElements(request);
+    // Expects the content to generate properly formatted HTML
+    const assertParsedContentNode = content => {
+      var elements = getContentElements(content);
       expect(elements.length).to.equal(1);
       expect(
         elements[0].innerHTML
       ).to.equal(
-        noteFormatter.format(request.content)
+        noteFormatter.format(content)
       )
     }
 
     it("Creates a single content node", () =>
-      assertParsedContentNode({ content: 'Some content' }))
+      assertParsedContentNode('Some content'))
     it("Adds parsed HTML to div content", () => 
-      assertParsedContentNode({ content: '<div>Some content</div>' }))
+      assertParsedContentNode('<div>Some content</div>'))
     it("Adds parsed input to div content", () =>
-      assertParsedContentNode({ content: '<input type="text" value="Message" />' }))
+      assertParsedContentNode('<input type="text" value="Message" />'))
     it("Adds parsed input within a div to div content", () => 
-      assertParsedContentNode({ content: '<div><input type="text" value="Message" /></div>' }))
+      assertParsedContentNode('<div><input type="text" value="Message" /></div>'))
     it("Adds parsed textarea by itself to div content", () => 
-      assertParsedContentNode({ content: '<textarea>This is a textarea</textarea>' }))
+      assertParsedContentNode('<textarea>This is a textarea</textarea>'))
     it("Adds parsed textarea within a div to div content", () => 
-      assertParsedContentNode({ content: '<div><textarea>This is a textarea</textarea></div>' }))
+      assertParsedContentNode('<div><textarea>This is a textarea</textarea></div>'))
   })
 })

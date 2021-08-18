@@ -1,14 +1,16 @@
 const noteBuilder = require('../builders/noteBuilder');
 const sendgrid = require('../services/sendgrid.service');
 const validator = require("email-validator");
-const subjectFormatter = require('../formatters/subjectFormatter');
 const NoteRequest = require('../models/NoteRequest');
+const subjectBuilder = require('../builders/subjectBuilder');
 
-const sendEmailNote = (note, res) =>
+const sendEmailNote = (note, res) => {
+  var noteDoc = noteBuilder.build(note.content);
+  
   sendgrid.sendMail(
     note.recipient,
-    subjectFormatter.format(note.title),
-    noteBuilder.build(note).documentElement.innerHTML
+    subjectBuilder.build(noteDoc),
+    noteDoc.documentElement.innerHTML
   )
   .then(response => {
     res.status(200)
@@ -19,17 +21,13 @@ const sendEmailNote = (note, res) =>
     res.status(500);
     res.send(err);
   });
+}
 
 // Parses a request body into a note
 const parseNote = req => {
   var note = new NoteRequest()
   note.recipient = req.body.recipient;
-  note.author = req.body.author;
   note.content = req.body.content;
-  note.title = req.body.title;
-  var timestamp = Date.parse(req.body.date);
-  if (!isNaN(timestamp))  
-    note.date = new Date(timestamp);
   return note;
 }
  
@@ -40,14 +38,10 @@ const parseNote = req => {
 module.exports.send = (req, res) => {
   var note = parseNote(req);
 
-  // Validate date
-  if (req.body.date && !note.date) {
-    res.status(400);
-    res.send('Date is invalid.');
   // Validate to email
-  } else if (!validator.validate(note.recipient)) {
+  if (!validator.validate(note.recipient)) {
     res.status(400);
     res.send('Email Address is invalid.');
   } else
-    sendEmailNote(note, res)
+    sendEmailNote(note, res);
 }
