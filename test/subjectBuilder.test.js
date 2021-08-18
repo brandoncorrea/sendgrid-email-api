@@ -25,4 +25,6 @@ describe("Retrieves the subject from HTML content", () => {
     assertHtmlSubject("<h7>This header doesn't exist</h7>", "Sermon Notes"))
   it("Returns H1 when H2 also exists", () => 
     assertHtmlSubject("<div><h1>This should return</h1><h2>This isn't gonna return</h2></div>", "This should return"))
+  it("Ignores HTML breaks", () => 
+    assertHtmlSubject("<h1>These are <br /> the breaks</h1>", "These are the breaks"))
 })

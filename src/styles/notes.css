@@ -17,6 +17,17 @@ h4 {
   font-size: 16px;
 }
 
+.content-part,
+.paragraph-field,
+.input-field {
+  margin-top: 15px !important;
+  margin-bottom: 13px !important;
+}
+
+i, .content-part {
+  font-weight: bold;
+}
+
 .content {
   margin: 0 auto;
   font-size: 13px;
@@ -24,11 +35,11 @@ h4 {
 }
 
 @media screen and (max-width: 600px) {
-  .title {
+  .h1 {
     font-size: 28px;
   }
 
-  .meta {
+  .h4 {
     font-size: 14px;
   }
 

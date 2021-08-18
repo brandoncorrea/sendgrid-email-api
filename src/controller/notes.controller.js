@@ -3,6 +3,7 @@ const sendgrid = require('../services/sendgrid.service');
 const validator = require("email-validator");
 const NoteRequest = require('../models/NoteRequest');
 const subjectBuilder = require('../builders/subjectBuilder');
+var he = require('he');
 
 const sendEmailNote = (note, res) => {
   var noteDoc = noteBuilder.build(note.content);
@@ -10,7 +11,7 @@ const sendEmailNote = (note, res) => {
   sendgrid.sendMail(
     note.recipient,
     subjectBuilder.build(noteDoc),
-    noteDoc.documentElement.innerHTML
+    he.decode(noteDoc.documentElement.innerHTML)
   )
   .then(response => {
     res.status(200)
