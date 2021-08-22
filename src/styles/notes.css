@@ -1,6 +1,5 @@
 h1, h4, .content {
   font-family: 'Verdana', 'Geneva', 'Tahoma', sans-serif;
-  white-space: pre;
 }
 
 h1 {
@@ -24,7 +23,9 @@ h4 {
   margin-bottom: 13px !important;
 }
 
-i, .content-part {
+i, 
+.paragraph-field, 
+.input-field {
   font-weight: bold;
 }
 
@@ -44,6 +45,6 @@ i, .content-part {
   }
 
   .content {
-    width: 90%;
+    width: 100%;
   }
 }
